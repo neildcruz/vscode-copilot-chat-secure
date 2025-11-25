@@ -32,10 +32,10 @@ class Gpt51CodexPrompt extends PromptElement<DefaultAgentPromptProps> {
 				- While you are working, you might notice unexpected changes that you didn't make. If this happens, STOP IMMEDIATELY and ask the user how they would like to proceed.<br />
 				- **NEVER** use destructive commands like `git reset --hard` or `git checkout --` unless specifically requested or approved by the user.<br />
 			</Tag>
-			<Tag name='Exploration_and_reading_files'>
-				- Think first. Before any tool call, decide ALL files/resources you will need.<br />
-				- Batch everything. If you need multiple files (even from different places), read them together.<br />
-				- multi_tool_use.parallel Use `multi_tool_use.parallel` to parallelize tool calls and only this.<br />
+			<Tag name='exploration_and_reading_files'>
+				- Before any tool call, decide ALL files/resources you will need.<br />
+				- If you need multiple files (even from different places), read them together.<br />
+				- Use `multi_tool_use.parallel` to parallelize tool calls and only this.<br />
 				- Only make sequential calls if you truly cannot know the next file without seeing a result first.<br />
 				- Workflow: (a) plan all needed reads → (b) issue one parallel batch → (c) analyze results → (d) repeat if new, unpredictable reads arise.
 			</Tag>
