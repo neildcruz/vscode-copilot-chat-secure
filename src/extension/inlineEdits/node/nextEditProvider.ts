@@ -304,6 +304,7 @@ export class NextEditProvider extends Disposable implements INextEditProvider<Ne
 			return emptyResult;
 		}
 
+		// isRejected expensive?
 		if (this._rejectionCollector.isRejected(targetDocumentId, edit) || currentDocument && this._nextEditCache.isRejectedNextEdit(targetDocumentId, currentDocument, edit, nesConfigs)) {
 			tracer.returns('edit was previously rejected');
 			telemetryBuilder.setStatus('previouslyRejected');
@@ -311,6 +312,7 @@ export class NextEditProvider extends Disposable implements INextEditProvider<Ne
 			return emptyResult;
 		}
 
+		// expensive?
 		logContext.setResult(RootedLineEdit.fromEdit(new RootedEdit(documentAtInvocationTime, new StringEdit([edit]))));
 
 		assert(currentDocument !== undefined, 'should be defined if edit is defined');

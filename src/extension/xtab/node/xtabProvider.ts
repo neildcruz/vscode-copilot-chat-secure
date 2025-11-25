@@ -1349,6 +1349,7 @@ export class XtabProvider implements IStatelessNextEditProvider {
 		await timeout(debounceTime);
 	}
 
+	// don't await in the caller if it's 0ms
 	private async enforceArtificialDelay(delaySession: DelaySession, tracer: ITracer, telemetry: StatelessNextEditTelemetryBuilder) {
 		if (this.simulationCtx.isInSimulationTests) {
 			return;
