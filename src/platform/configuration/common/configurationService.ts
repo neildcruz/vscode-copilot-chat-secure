@@ -830,6 +830,13 @@ export namespace ConfigKey {
 
 	export const CompletionsFetcher = defineExpSetting<FetcherId | undefined>('chat.completionsFetcher', undefined);
 	export const NextEditSuggestionsFetcher = defineExpSetting<FetcherId | undefined>('chat.nesFetcher', undefined);
+
+	/** Sensitive Data Filter */
+	export namespace SensitiveDataFilter {
+		export const Enabled = defineSetting<boolean>('chat.sensitiveDataFilter.enabled', false);
+		export const UseBuiltInPatterns = defineSetting<boolean>('chat.sensitiveDataFilter.useBuiltInPatterns', true);
+		export const CustomPatterns = defineSetting<Array<{ name: string; category: string; pattern: string }>>('chat.sensitiveDataFilter.customPatterns', []);
+	}
 }
 
 export function getAllConfigKeys(): string[] {

@@ -10,6 +10,7 @@ import { IConfigurationService } from '../../configuration/common/configurationS
 import { ILogService } from '../../log/common/logService';
 import { IFetcherService } from '../../networking/common/fetcherService';
 import { IChatEndpoint } from '../../networking/common/networking';
+import { ISensitiveDataFilterService } from '../../sensitiveData/common/sensitiveDataFilterService';
 import { IExperimentationService } from '../../telemetry/common/nullExperimentationService';
 import { ITelemetryService } from '../../telemetry/common/telemetry';
 import { ITokenizerProvider } from '../../tokenizer/node/tokenizer';
@@ -41,6 +42,7 @@ export class AutoChatEndpoint extends ChatEndpoint {
 		@IConfigurationService _configurationService: IConfigurationService,
 		@IExperimentationService _expService: IExperimentationService,
 		@ILogService _logService: ILogService,
+		@ISensitiveDataFilterService _sensitiveDataFilterService: ISensitiveDataFilterService,
 	) {
 		super(
 			calculateAutoModelInfo(_wrappedEndpoint, _sessionToken, _discountPercent),
@@ -54,7 +56,8 @@ export class AutoChatEndpoint extends ChatEndpoint {
 			_instantiationService,
 			_configurationService,
 			_expService,
-			_logService
+			_logService,
+			_sensitiveDataFilterService
 		);
 	}
 }

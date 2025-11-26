@@ -16,6 +16,7 @@ import { isOpenAiFunctionTool } from '../../../platform/networking/common/fetch'
 import { IFetcherService } from '../../../platform/networking/common/fetcherService';
 import { createCapiRequestBody, IChatEndpoint, ICreateEndpointBodyOptions, IEndpointBody, IMakeChatRequestOptions } from '../../../platform/networking/common/networking';
 import { RawMessageConversionCallback } from '../../../platform/networking/common/openai';
+import { ISensitiveDataFilterService } from '../../../platform/sensitiveData/common/sensitiveDataFilterService';
 import { IExperimentationService } from '../../../platform/telemetry/common/nullExperimentationService';
 import { ITelemetryService } from '../../../platform/telemetry/common/telemetry';
 import { ITokenizerProvider } from '../../../platform/tokenizer/node/tokenizer';
@@ -127,7 +128,8 @@ export class OpenAIEndpoint extends ChatEndpoint {
 		@IInstantiationService protected instantiationService: IInstantiationService,
 		@IConfigurationService configurationService: IConfigurationService,
 		@IExperimentationService expService: IExperimentationService,
-		@ILogService protected logService: ILogService
+		@ILogService protected logService: ILogService,
+		@ISensitiveDataFilterService sensitiveDataFilterService: ISensitiveDataFilterService
 	) {
 		super(
 			_modelMetadata,
@@ -141,7 +143,8 @@ export class OpenAIEndpoint extends ChatEndpoint {
 			instantiationService,
 			configurationService,
 			expService,
-			logService
+			logService,
+			sensitiveDataFilterService
 		);
 		this._customHeaders = this._sanitizeCustomHeaders(_modelMetadata.requestHeaders);
 	}

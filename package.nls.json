@@ -56,14 +56,14 @@
 		]
 	},
 	"github.copilot.viewsWelcome.chatDisabled": {
-		"message": "GitHub Copilot Chat is currently disabled for your account by an organization administrator. Contact an organization administrator to enable chat.\n\n[Learn More](https://docs.github.com/en/copilot/managing-copilot/managing-github-copilot-in-your-organization/managing-github-copilot-features-in-your-organization/managing-policies-for-copilot-in-your-organization)",
+		"message": "GitHub Copilot Chat - Secure is currently disabled for your account by an organization administrator. Contact an organization administrator to enable chat.\n\n[Learn More](https://docs.github.com/en/copilot/managing-copilot/managing-github-copilot-in-your-organization/managing-github-copilot-features-in-your-organization/managing-policies-for-copilot-in-your-organization)",
 		"comment": [
 			"{Locked='['}",
 			"{Locked='](https://docs.github.com/en/copilot/managing-copilot/managing-github-copilot-in-your-organization/managing-github-copilot-features-in-your-organization/managing-policies-for-copilot-in-your-organization)'}"
 		]
 	},
 	"github.copilot.viewsWelcome.switchToReleaseChannel": {
-		"message": "The Pre-Release version of the GitHub Copilot Chat extension is not currently supported in the stable version of VS Code. Please switch to the release version for GitHub Copilot Chat or try VS Code Insiders.\n\n[Switch to Release Version and Reload](command:runCommands?%7B%22commands%22%3A%5B%7B%22command%22%3A%22workbench.extensions.action.switchToRelease%22%2C%22args%22%3A%5B%22GitHub.copilot-chat%22%5D%7D%2C%22workbench.action.reloadWindow%22%5D%7D)\n\n[Switch to VS Code Insiders](https://aka.ms/vscode-insiders)",
+		"message": "The Pre-Release version of the GitHub Copilot Chat - Secure extension is not currently supported in the stable version of VS Code. Please switch to the release version for GitHub Copilot Chat - Secure or try VS Code Insiders.\n\n[Switch to Release Version and Reload](command:runCommands?%7B%22commands%22%3A%5B%7B%22command%22%3A%22workbench.extensions.action.switchToRelease%22%2C%22args%22%3A%5B%22GitHub.copilot-chat-secure%22%5D%7D%2C%22workbench.action.reloadWindow%22%5D%7D)\n\n[Switch to VS Code Insiders](https://aka.ms/vscode-insiders)",
 		"comment": [
 			"{Locked='['}",
 			"{Locked='](command:runCommands?%7B%22commands%22%3A%5B%7B%22command%22%3A%22workbench.extensions.action.switchToRelease%22%2C%22args%22%3A%5B%22GitHub.copilot-chat%22%5D%7D%2C%22workbench.action.reloadWindow%22%5D%7D)'}",
@@ -188,6 +188,12 @@
 	"github.copilot.chat.edits.temporalContext.enabled": "When making edits request whether to include recently viewed and edited files with Copilot requests.",
 	"github.copilot.config.setupTests.enabled": "Enables the `/setupTests` intent and prompting in `/tests` generation.",
 	"github.copilot.config.byok.ollamaEndpoint": "The endpoint to use for the Ollama when accessed via bring your own key. Defaults to localhost.",
+	"github.copilot.config.sensitiveDataFilter.enabled": "When enabled, prompts sent to Copilot APIs will be scanned for sensitive data patterns (such as API keys, passwords, credit card numbers) and requests containing matches will be blocked.",
+	"github.copilot.config.sensitiveDataFilter.useBuiltInPatterns": "When enabled, built-in patterns for common sensitive data types (API keys, AWS credentials, passwords, private keys, SSN, credit card numbers, connection strings, IP addresses) will be used for detection.",
+	"github.copilot.config.sensitiveDataFilter.customPatterns": "Custom regex patterns to detect sensitive data in prompts. Each pattern must have a name, category, and regex pattern string.",
+	"github.copilot.config.sensitiveDataFilter.customPatterns.name": "A descriptive name for this pattern.",
+	"github.copilot.config.sensitiveDataFilter.customPatterns.category": "The category of sensitive data this pattern detects (e.g., 'API Key', 'Internal ID').",
+	"github.copilot.config.sensitiveDataFilter.customPatterns.pattern": "A JavaScript regular expression pattern to match sensitive data.",
 	"github.copilot.config.virtualTools.threshold": "This setting defines the tool count over which virtual tools should be used. Virtual tools group similar sets of tools together and they allow the model to activate them on-demand. Certain tool groups will optimistically be pre-activated. We are actively developing this feature and you experience degraded tool calling once the threshold is hit.\n\nMay be set to `0` to disable virtual tools.",
 	"github.copilot.config.alternateGptPrompt.enabled": "Enables an experimental alternate prompt for GPT models instead of the default prompt.",
 	"github.copilot.config.gpt5CodexAlternatePrompt": "Specifies an experimental alternate prompt to use for the GPT-5-Codex model.",

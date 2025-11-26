@@ -11,6 +11,7 @@ import { IChatMLFetcher } from '../../chat/common/chatMLFetcher';
 import { CHAT_MODEL, ConfigKey, IConfigurationService } from '../../configuration/common/configurationService';
 import { ILogService } from '../../log/common/logService';
 import { IFetcherService } from '../../networking/common/fetcherService';
+import { ISensitiveDataFilterService } from '../../sensitiveData/common/sensitiveDataFilterService';
 import { IExperimentationService } from '../../telemetry/common/nullExperimentationService';
 import { ITelemetryService } from '../../telemetry/common/telemetry';
 import { ITokenizerProvider } from '../../tokenizer/node/tokenizer';
@@ -33,6 +34,7 @@ export class ProxyInstantApplyShortEndpoint extends ChatEndpoint {
 		@IConfigurationService configurationService: IConfigurationService,
 		@IExperimentationService experimentationService: IExperimentationService,
 		@ILogService logService: ILogService,
+		@ISensitiveDataFilterService sensitiveDataFilterService: ISensitiveDataFilterService,
 	) {
 		const model = configurationService.getExperimentBasedConfig<string>(ConfigKey.Internal.InstantApplyShortModelName, experimentationService) ?? CHAT_MODEL.SHORT_INSTANT_APPLY;
 		const modelInfo: IChatModelInformation = {
@@ -65,7 +67,8 @@ export class ProxyInstantApplyShortEndpoint extends ChatEndpoint {
 			instantiationService,
 			configurationService,
 			experimentationService,
-			logService
+			logService,
+			sensitiveDataFilterService
 		);
 	}
 

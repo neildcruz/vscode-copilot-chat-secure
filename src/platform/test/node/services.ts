@@ -76,6 +76,7 @@ import { NullRequestLogger } from '../../requestLogger/node/nullRequestLogger';
 import { IRequestLogger } from '../../requestLogger/node/requestLogger';
 import { IScopeSelector } from '../../scopeSelection/common/scopeSelection';
 import { ISearchService } from '../../search/common/searchService';
+import { ISensitiveDataFilterService, NullSensitiveDataFilterService } from '../../sensitiveData/common/sensitiveDataFilterService';
 import { ISimulationTestContext, NulSimulationTestContext } from '../../simulationTestContext/common/simulationTestContext';
 import { ISnippyService, NullSnippyService } from '../../snippy/common/snippyService';
 import { ISurveyService, NullSurveyService } from '../../survey/common/surveyService';
@@ -285,6 +286,7 @@ export function createPlatformServices(disposables: Pick<DisposableStore, 'add'>
 	}));
 
 	testingServiceCollection.define(ITasksService, new SyncDescriptor(TestTasksService));
+	testingServiceCollection.define(ISensitiveDataFilterService, new NullSensitiveDataFilterService());
 
 	return testingServiceCollection;
 }
