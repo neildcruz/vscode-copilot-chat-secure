@@ -799,7 +799,7 @@ export namespace ConfigKey {
 		export const AskAgent = defineSetting<boolean>('chat.advanced.enableAskAgent', ConfigType.ExperimentBased, false);
 		export const RetryNetworkErrors = defineSetting<boolean>('chat.advanced.enableRetryNetworkErrors', ConfigType.ExperimentBased, false);
 		/** Use the Messages API instead of Chat Completions when supported */
-		export const UseMessagesApi = defineTeamInternalSetting<boolean | undefined>('chat.advanced.useMessagesApi', ConfigType.ExperimentBased, false);
+		export const UseMessagesApi = defineTeamInternalSetting<boolean | undefined>('chat.advanced.useMessagesApi', ConfigType.ExperimentBased, true);
 		export const WorkspaceEnableCodeSearchExternalIngest = defineTeamInternalSetting<boolean>('chat.advanced.workspace.codeSearchExternalIngest.enabled', ConfigType.ExperimentBased, false);
 	}
 
