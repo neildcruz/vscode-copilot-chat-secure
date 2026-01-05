@@ -75,6 +75,7 @@ import { NullRequestLogger } from '../../requestLogger/node/nullRequestLogger';
 import { IRequestLogger } from '../../requestLogger/node/requestLogger';
 import { IScopeSelector } from '../../scopeSelection/common/scopeSelection';
 import { ISearchService } from '../../search/common/searchService';
+import { ISensitiveDataFilterService, NullSensitiveDataFilterService } from '../../sensitiveData/common/sensitiveDataFilterService';
 import { ISimulationTestContext, NulSimulationTestContext } from '../../simulationTestContext/common/simulationTestContext';
 import { ISnippyService, NullSnippyService } from '../../snippy/common/snippyService';
 import { ISurveyService, NullSurveyService } from '../../survey/common/surveyService';
@@ -217,6 +218,7 @@ export function _createBaselineServices(): TestingServiceCollection {
 	testingServiceCollection.define(IEditSurvivalTrackerService, new SyncDescriptor(NullEditSurvivalTrackerService));
 	testingServiceCollection.define(IWorkspaceChunkSearchService, new SyncDescriptor(NullWorkspaceChunkSearchService));
 	testingServiceCollection.define(ICodeSearchAuthenticationService, new SyncDescriptor(BasicCodeSearchAuthenticationService));
+	testingServiceCollection.define(ISensitiveDataFilterService, new NullSensitiveDataFilterService());
 	return testingServiceCollection;
 }
 

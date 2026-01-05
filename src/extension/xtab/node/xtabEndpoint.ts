@@ -12,6 +12,7 @@ import { IChatModelInformation } from '../../../platform/endpoint/common/endpoin
 import { ChatEndpoint } from '../../../platform/endpoint/node/chatEndpoint';
 import { ILogService } from '../../../platform/log/common/logService';
 import { IFetcherService } from '../../../platform/networking/common/fetcherService';
+import { ISensitiveDataFilterService } from '../../../platform/sensitiveData/common/sensitiveDataFilterService';
 import { IExperimentationService } from '../../../platform/telemetry/common/nullExperimentationService';
 import { ITelemetryService } from '../../../platform/telemetry/common/telemetry';
 import { ITokenizerProvider } from '../../../platform/tokenizer/node/tokenizer';
@@ -60,7 +61,8 @@ export class XtabEndpoint extends ChatEndpoint {
 		@ITokenizerProvider _tokenizerProvider: ITokenizerProvider,
 		@IInstantiationService _instantiationService: IInstantiationService,
 		@IExperimentationService _experimentationService: IExperimentationService,
-		@ILogService _logService: ILogService
+		@ILogService _logService: ILogService,
+		@ISensitiveDataFilterService _sensitiveDataFilterService: ISensitiveDataFilterService
 	) {
 		const chatModelInfo = _configuredModelName ? { ...XtabEndpoint.chatModelInfo, id: _configuredModelName } : XtabEndpoint.chatModelInfo;
 		super(
@@ -75,7 +77,8 @@ export class XtabEndpoint extends ChatEndpoint {
 			_instantiationService,
 			_configService,
 			_experimentationService,
-			_logService
+			_logService,
+			_sensitiveDataFilterService
 		);
 	}
 

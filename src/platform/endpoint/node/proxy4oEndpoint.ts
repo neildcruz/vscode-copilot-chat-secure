@@ -12,6 +12,7 @@ import { IChatMLFetcher } from '../../chat/common/chatMLFetcher';
 import { CHAT_MODEL, ConfigKey, IConfigurationService } from '../../configuration/common/configurationService';
 import { ILogService } from '../../log/common/logService';
 import { IFetcherService } from '../../networking/common/fetcherService';
+import { ISensitiveDataFilterService } from '../../sensitiveData/common/sensitiveDataFilterService';
 import { IExperimentationService } from '../../telemetry/common/nullExperimentationService';
 import { ITokenizerProvider } from '../../tokenizer/node/tokenizer';
 import { ICAPIClientService } from '../common/capiClient';
@@ -35,6 +36,7 @@ export class Proxy4oEndpoint extends ChatEndpoint {
 		@IConfigurationService configurationService: IConfigurationService,
 		@IExperimentationService experimentationService: IExperimentationService,
 		@ILogService logService: ILogService,
+		@ISensitiveDataFilterService sensitiveDataFilterService: ISensitiveDataFilterService,
 	) {
 		const model = configurationService.getExperimentBasedConfig<string>(ConfigKey.TeamInternal.InstantApplyModelName, experimentationService) ?? CHAT_MODEL.GPT4OPROXY;
 
@@ -68,7 +70,8 @@ export class Proxy4oEndpoint extends ChatEndpoint {
 			instantiationService,
 			configurationService,
 			experimentationService,
-			logService
+			logService,
+			sensitiveDataFilterService
 		);
 	}
 

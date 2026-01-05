@@ -879,6 +879,13 @@ export namespace ConfigKey {
 	export const GitHubMcpToolsets = defineSetting<string[]>('chat.githubMcpServer.toolsets', ConfigType.Simple, ['default']);
 	export const GitHubMcpReadonly = defineSetting<boolean>('chat.githubMcpServer.readonly', ConfigType.Simple, false);
 	export const GitHubMcpLockdown = defineSetting<boolean>('chat.githubMcpServer.lockdown', ConfigType.Simple, false);
+
+	/** Sensitive Data Filter */
+	export namespace SensitiveDataFilter {
+		export const Enabled = defineSetting<boolean>('chat.sensitiveDataFilter.enabled', ConfigType.Simple, true);
+		export const UseBuiltInPatterns = defineSetting<boolean>('chat.sensitiveDataFilter.useBuiltInPatterns', ConfigType.Simple, true);
+		export const CustomPatterns = defineSetting<Array<{ name: string; category: string; pattern: string }>>('chat.sensitiveDataFilter.customPatterns', ConfigType.Simple, []);
+	}
 }
 
 export function getAllConfigKeys(): string[] {

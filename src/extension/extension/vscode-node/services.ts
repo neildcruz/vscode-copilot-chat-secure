@@ -57,6 +57,8 @@ import { IScopeSelector } from '../../../platform/scopeSelection/common/scopeSel
 import { ScopeSelectorImpl } from '../../../platform/scopeSelection/vscode-node/scopeSelectionImpl';
 import { ISearchService } from '../../../platform/search/common/searchService';
 import { SearchServiceImpl } from '../../../platform/search/vscode-node/searchServiceImpl';
+import { ISensitiveDataFilterService } from '../../../platform/sensitiveData/common/sensitiveDataFilterService';
+import { SensitiveDataFilterService } from '../../../platform/sensitiveData/node/sensitiveDataFilterServiceImpl';
 import { ISettingsEditorSearchService } from '../../../platform/settingsEditor/common/settingsEditorSearchService';
 import { IExperimentationService, NullExperimentationService } from '../../../platform/telemetry/common/nullExperimentationService';
 import { NullTelemetryService } from '../../../platform/telemetry/common/nullTelemetryService';
@@ -213,6 +215,7 @@ export function registerServices(builder: IInstantiationServiceBuilder, extensio
 	builder.define(IProxyModelsService, new SyncDescriptor(ProxyModelsService));
 	builder.define(IInlineEditsModelService, new SyncDescriptor(InlineEditsModelService));
 	builder.define(ICopilotInlineCompletionItemProviderService, new SyncDescriptor(CopilotInlineCompletionItemProviderService));
+	builder.define(ISensitiveDataFilterService, new SyncDescriptor(SensitiveDataFilterService));
 }
 
 function setupMSFTExperimentationService(builder: IInstantiationServiceBuilder, extensionContext: ExtensionContext) {

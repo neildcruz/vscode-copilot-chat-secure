@@ -13,7 +13,7 @@ import { generateUuid } from '../../../util/vs/base/common/uuid';
 import { IInstantiationService } from '../../../util/vs/platform/instantiation/common/instantiation';
 import { IAuthenticationService } from '../../authentication/common/authentication';
 import { IChatMLFetcher, Source } from '../../chat/common/chatMLFetcher';
-import { ChatLocation, ChatResponse } from '../../chat/common/commonTypes';
+import { ChatLocation, ChatFetchResponseType, ChatResponse } from '../../chat/common/commonTypes';
 import { getTextPart } from '../../chat/common/globalStringUtils';
 import { CHAT_MODEL, ConfigKey, IConfigurationService } from '../../configuration/common/configurationService';
 import { ILogService } from '../../log/common/logService';
@@ -23,6 +23,7 @@ import { createCapiRequestBody, IChatEndpoint, ICreateEndpointBodyOptions, IEndp
 import { CAPIChatMessage, ChatCompletion, FinishedCompletionReason, RawMessageConversionCallback } from '../../networking/common/openai';
 import { prepareChatCompletionForReturn } from '../../networking/node/chatStream';
 import { SSEProcessor } from '../../networking/node/stream';
+import { extractTextFromMessages, getUniqueCategories, ISensitiveDataFilterService } from '../../sensitiveData/common/sensitiveDataFilterService';
 import { IExperimentationService } from '../../telemetry/common/nullExperimentationService';
 import { ITelemetryService, TelemetryProperties } from '../../telemetry/common/telemetry';
 import { TelemetryData } from '../../telemetry/common/telemetryData';
@@ -143,7 +144,8 @@ export class ChatEndpoint implements IChatEndpoint {
 		@IInstantiationService protected readonly _instantiationService: IInstantiationService,
 		@IConfigurationService protected readonly _configurationService: IConfigurationService,
 		@IExperimentationService private readonly _expService: IExperimentationService,
-		@ILogService _logService: ILogService,
+		@ILogService protected readonly _logService: ILogService,
+		@ISensitiveDataFilterService private readonly _sensitiveDataFilterService: ISensitiveDataFilterService,
 	) {
 		// This metadata should always be present, but if not we will default to 8192 tokens
 		this._maxTokens = modelMetadata.capabilities.limits?.max_prompt_tokens ?? 8192;
@@ -354,7 +356,26 @@ export class ChatEndpoint implements IChatEndpoint {
 		// return response;
 	}
 
-	protected async _makeChatRequest2(options: IMakeChatRequestOptions, token: CancellationToken) {
+	protected async _makeChatRequest2(options: IMakeChatRequestOptions, token: CancellationToken): Promise<ChatResponse> {
+		// Check for sensitive data in messages before sending (if service is available)
+		if (this._sensitiveDataFilterService) {
+			const text = extractTextFromMessages(options.messages as unknown as Parameters<typeof extractTextFromMessages>[0]);
+			const matches = await this._sensitiveDataFilterService.checkForSensitiveData(text);
+
+			if (matches.length > 0) {
+				const categories = getUniqueCategories(matches);
+				const categoryList = categories.join(', ');
+				this._logService.warn(`[SensitiveDataFilter] Request blocked due to sensitive data detected. Categories: ${categoryList}`);
+
+				return {
+					type: ChatFetchResponseType.Failed,
+					reason: `Request blocked: Sensitive data detected in the following categories: ${categoryList}. Please remove sensitive information before sending.`,
+					requestId: generateUuid(),
+					serverRequestId: undefined,
+				};
+			}
+		}
+
 		return this._chatMLFetcher.fetchOne({
 			requestOptions: {},
 			...options,
@@ -406,7 +427,8 @@ export class RemoteAgentChatEndpoint extends ChatEndpoint {
 		@IInstantiationService instantiationService: IInstantiationService,
 		@IConfigurationService configService: IConfigurationService,
 		@IExperimentationService experimentService: IExperimentationService,
-		@ILogService logService: ILogService
+		@ILogService logService: ILogService,
+		@ISensitiveDataFilterService sensitiveDataFilterService: ISensitiveDataFilterService
 	) {
 		super(
 			modelMetadata,
@@ -420,7 +442,8 @@ export class RemoteAgentChatEndpoint extends ChatEndpoint {
 			instantiationService,
 			configService,
 			experimentService,
-			logService
+			logService,
+			sensitiveDataFilterService
 		);
 	}
 

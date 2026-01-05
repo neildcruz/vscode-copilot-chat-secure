@@ -1,6 +1,6 @@
 {
 	"name": "copilot-chat",
-	"displayName": "GitHub Copilot Chat",
+	"displayName": "GitHub Copilot Chat - Secure",
 	"description": "AI chat features powered by Copilot",
 	"version": "0.35.2",
 	"build": "1",
@@ -2642,6 +2642,42 @@
 							"preview"
 						],
 						"markdownDescription": "%github.copilot.config.byok.ollamaEndpoint%"
+					},
+					"github.copilot.chat.sensitiveDataFilter.enabled": {
+						"type": "boolean",
+						"default": true,
+						"scope": "resource",
+						"markdownDescription": "%github.copilot.config.sensitiveDataFilter.enabled%"
+					},
+					"github.copilot.chat.sensitiveDataFilter.useBuiltInPatterns": {
+						"type": "boolean",
+						"default": true,
+						"scope": "resource",
+						"markdownDescription": "%github.copilot.config.sensitiveDataFilter.useBuiltInPatterns%"
+					},
+					"github.copilot.chat.sensitiveDataFilter.customPatterns": {
+						"type": "array",
+						"default": [],
+						"scope": "resource",
+						"items": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"type": "string",
+									"description": "%github.copilot.config.sensitiveDataFilter.customPatterns.name%"
+								},
+								"category": {
+									"type": "string",
+									"description": "%github.copilot.config.sensitiveDataFilter.customPatterns.category%"
+								},
+								"pattern": {
+									"type": "string",
+									"description": "%github.copilot.config.sensitiveDataFilter.customPatterns.pattern%"
+								}
+							},
+							"required": ["name", "category", "pattern"]
+						},
+						"markdownDescription": "%github.copilot.config.sensitiveDataFilter.customPatterns%"
 					}
 				}
 			},
